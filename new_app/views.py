@@ -12,11 +12,32 @@ from new_app.models import CustomUser
 #from knox.models import AuthToken
 #from knox.views import LoginView as KnoxLoginView
 from new_app.serializers import CustomUserSerializer,CustomUser_loginSerializer,UserSerializer
-from cryptography.fernet import Fernet
-
+# from cryptography.fernet import Fernet
 
 @api_view(['POST'])
 def loginuser_view(request):
+        #serializer = CustomUser_loginSerializer(data=request.data)
+        data=request.data
+        email=data.get('email')
+        password=data.get('password')
+        data={}
+        if CustomUser.objects.filter(email=email,password=password).exists():
+            user=CustomUser.objects.get(email=email,password=password)
+            data['response']=1
+            data['uid']=user.id
+            data['first_name']=user.first_name
+            data['middile_name']=user.middile_name
+            data['last_name']=user.last_name
+            data['email']=user.email
+            data['role']=user.role_type
+            return Response(data)
+        else:
+            data['response']=0
+            data['error']='User id or password is incorrect!'
+            return Response(data)
+
+@api_view(['POST'])
+def loginuser_view1(request):
         #serializer = CustomUser_loginSerializer(data=request.data)
         data=request.data
         email=data.get('email')
@@ -71,7 +92,7 @@ def customusercreate_view(request):
     data={}
     if serializer.is_valid():
         result=serializer.save()
-        data['response']="Successfully registered a new user"
+        data['response']=1
         data['first_name']=result.first_name
         data['middile_name']=result.middile_name
         data['last_name']=result.last_name
@@ -80,6 +101,8 @@ def customusercreate_view(request):
         #data['token']=AuthToken.objects.create(result)[1]
         #data['password']=result.password
     else:
+        data['response']=0
+        data['error']="some error happens"
         data=serializer.errors        
     return Response(data)
 

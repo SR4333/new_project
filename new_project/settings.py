@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'new_app',
     'rest_framework',
-    'knox',
+    # 'knox',
 ]
 
 MIDDLEWARE = [
@@ -81,7 +81,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'db2',
         'USER': 'postgres',
-        'PASSWORD': 'Marolix',
+        'PASSWORD': '123456',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -131,11 +131,11 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'new_app.CustomUser'
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        #'rest_framework.authentication.BasicAuthentication',
-        #'rest_framework.authentication.SessionAuthentication',
-        'knox.auth.TokenAuthentication',
-    ]
-}
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': [
+#         #'rest_framework.authentication.BasicAuthentication',
+#         #'rest_framework.authentication.SessionAuthentication',
+#         'knox.auth.TokenAuthentication',
+#     ]
+# }
 

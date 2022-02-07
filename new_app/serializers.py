@@ -1,7 +1,7 @@
 import re
 #from django.core.validators import email_re
 from django.contrib.auth.hashers import make_password, check_password
-from cryptography.fernet import Fernet
+# from cryptography.fernet import Fernet
 
 from rest_framework import serializers
 from new_app.models import CustomUser
@@ -15,11 +15,11 @@ class CustomUserSerializer(serializers.ModelSerializer):
     first_name=serializers.CharField(max_length=50,min_length=3)
     last_name=serializers.CharField(max_length=50,min_length=3)
     middile_name=serializers.CharField(max_length=50,min_length=3)    
-    password2=serializers.CharField(style={'input_type':'password'},write_only=True)
+    # password2=serializers.CharField(style={'input_type':'password'},write_only=True)
     class Meta:
         model=CustomUser
-        fields=('id','first_name','middile_name','last_name','email','password','password2','role_type')
-        extra_kwargs={'password2':{'write_only':True}}  
+        fields=('id','first_name','middile_name','last_name','email','password','role_type')
+        # extra_kwargs={'password2':{'write_only':True}}  
 
     def validate(self,attrs):
         if CustomUser.objects.filter(email=attrs['email']).exists():
@@ -46,7 +46,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
         middile_name=self.validated_data['middile_name'] 
         email=self.validated_data['email']
         password=self.validated_data['password'] 
-        password2=self.validated_data['password2']
+        # password2=self.validated_data['password2']
         role_type=self.validated_data['role_type']
         pat = re.compile(r"^[a-zA-Z_.]+( [a-zA-Z_.]+)*$")
         if not re.fullmatch(pat, first_name) or first_name.startswith(".") or first_name.startswith("_"):
@@ -55,8 +55,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({'LastName':"Please Enter valid Data"}) 
         elif not re.fullmatch(pat, middile_name) or middile_name.startswith(".") or middile_name.startswith("_"):
             raise serializers.ValidationError({'LastName':"Please Enter valid Data"})        
-        elif password!=password2:
-            raise serializers.ValidationError({'Password':"Passwords must match"}) 
+        # elif password!=password2:
+        #     raise serializers.ValidationError({'Password':"Passwords must match"}) 
             
         user.save()  
         return user  
