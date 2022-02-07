@@ -188,14 +188,10 @@ def userdelete_view(request,pk):
     data={}
     try:
         user=CustomUser.objects.get(id=pk)
-        serializer=CustomUserSerializer(instance=user,data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            data['response']=1
+        user.delete()
+        data['response']=1
     except:
-         serializer.data="Error occur while Fecthing Data." 
-         serializer.data=0
-    
-    return Response(serializer.data)         
+         data['response']=0
+    return Response(data)         
 
 
