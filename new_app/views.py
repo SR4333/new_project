@@ -153,6 +153,7 @@ def userupdate_view(request,pk):
         #return JsonResponse(user_serializer.data) 
     else:
         data['response']=0
+    #return JsonResponse(user_serializer.data)    
     return Response(data) 
 
 
