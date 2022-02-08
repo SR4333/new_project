@@ -18,7 +18,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
     # password2=serializers.CharField(style={'input_type':'password'},write_only=True)
     class Meta:
         model=CustomUser
-        fields=('id','first_name','middile_name','last_name','email','password','role_type')
+        fields=('id','first_name','last_name','middile_name','email','password','role_type')
         # extra_kwargs={'password2':{'write_only':True}}  
 
     def validate(self,attrs):
@@ -65,8 +65,14 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
- 
+    #email=serializers.CharField(max_length=255,min_length=4)
+    first_name=serializers.CharField(max_length=50,min_length=3)
+    last_name=serializers.CharField(max_length=50,min_length=3)
+    #middile_name=serializers.CharField(max_length=50,min_length=3)
+    role_type=serializers.CharField(max_length=50,min_length=3)
     class Meta:
         model = CustomUser
-        fields=('id','first_name','middile_name','last_name','email','role_type')
-   
+        fields=('id','first_name','middile_name','last_name','role_type')
+
+    def validate(self,attrs):
+        return super().validate(attrs) 
