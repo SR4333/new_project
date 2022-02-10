@@ -3,6 +3,8 @@ import re
 from django.contrib.auth.hashers import make_password, check_password
 # from cryptography.fernet import Fernet
 
+
+
 from rest_framework import serializers
 from new_app.models import CustomUser
 class CustomUser_loginSerializer(serializers.ModelSerializer):
@@ -13,8 +15,10 @@ class CustomUser_loginSerializer(serializers.ModelSerializer):
 class CustomUserSerializer(serializers.ModelSerializer):
     email=serializers.CharField(max_length=255,min_length=4)
     first_name=serializers.CharField(max_length=50,min_length=3)
-    last_name=serializers.CharField(max_length=50,min_length=3)
-    middile_name=serializers.CharField(max_length=50,min_length=3)    
+    #last_name=serializers.CharField(max_length=50,min_length=3)
+    #middile_name=serializers.CharField(max_length=50,min_length=3) 
+    
+   
     # password2=serializers.CharField(style={'input_type':'password'},write_only=True)
     class Meta:
         model=CustomUser
@@ -45,6 +49,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
         last_name=self.validated_data['last_name'] 
         middile_name=self.validated_data['middile_name'] 
         email=self.validated_data['email']
+        regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
         password=self.validated_data['password'] 
         # password2=self.validated_data['password2']
         role_type=self.validated_data['role_type']
@@ -54,15 +59,16 @@ class CustomUserSerializer(serializers.ModelSerializer):
         elif not re.fullmatch(pat, last_name) or last_name.startswith(".") or last_name.startswith("_"):
             raise serializers.ValidationError({'LastName':"Please Enter valid Data"}) 
         elif not re.fullmatch(pat, middile_name) or middile_name.startswith(".") or middile_name.startswith("_"):
-            raise serializers.ValidationError({'LastName':"Please Enter valid Data"})        
+            raise serializers.ValidationError({'LastName':"Please Enter valid Data"}) 
+        elif not re.fullmatch(regex, email):
+            raise serializers.ValidationError({'Email':"Invalid EmailId"})
+     
+            
         # elif password!=password2:
         #     raise serializers.ValidationError({'Password':"Passwords must match"}) 
             
         user.save()  
         return user  
-
-
-
 
 class UserSerializer(serializers.ModelSerializer):
     #email=serializers.CharField(max_length=255,min_length=4)
