@@ -100,9 +100,11 @@ def userupdate_view(request):
     if user_serializer.is_valid():
         result=user_serializer.save() 
         data['response']=1
+        data['id']=result.id
         data['first_name']=result.first_name
         data['middile_name']=result.middile_name
         data['last_name']=result.last_name
+        data['email']=result.email
         data['role_type']=result.role_type
         return Response(data) 
     else:
