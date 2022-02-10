@@ -24,7 +24,7 @@ def loginuser_view(request):
         if CustomUser.objects.filter(email=email,password=password).exists():
             user=CustomUser.objects.get(email=email,password=password)
             data['response']=1
-            data['uid']=user.id
+            data['id']=user.id
             data['first_name']=user.first_name
             data['middile_name']=user.middile_name
             data['last_name']=user.last_name
@@ -45,6 +45,7 @@ def customusercreate_view(request):
     if serializer.is_valid():
         result=serializer.save()
         data['response']=1
+        data['id']=result.id
         data['first_name']=result.first_name
         data['middile_name']=result.middile_name
         data['last_name']=result.last_name
