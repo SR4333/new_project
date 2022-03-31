@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'new_app',
     'rest_framework',
+    'map_app',
+    'temp_app',
     # 'knox',
 ]
 
@@ -133,11 +135,10 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'new_app.CustomUser'
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': [
-#         #'rest_framework.authentication.BasicAuthentication',
-#         #'rest_framework.authentication.SessionAuthentication',
-#         'knox.auth.TokenAuthentication',
-#     ]
-# }
 
+#GDAL_LIBRARY_PATH=r'C:\Users\ksreelak\OneDrive - Capgemini\Desktop\fastapi_project\env1\Lib\site-packages\osgeo\gdal303.dll'
+#GEOS_LIBRARY_PATH =r'C:\Users\ksreelak\OneDrive - Capgemini\Desktop\fastapi_project\env1\Lib\site-packages\osgeo\geos_c.dll'
+#REST_FRAMEWORK = {
+     #'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework.authentication.BasicAuthentication'],
+     #'DEFAULT_PERMISSION_CLASSES':['rest_framework.permissions.IsAuthenticated']
+ #}
